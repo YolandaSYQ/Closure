@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>闭包</title>
+</head>
+<body>
+     <script type="text/javascript">
+    	var i;
+        for(i=0;i<10;i++){
+			(function(i){
+				var li = document.createElement('li');
+				li.innerHTML = i+"<br/>";
+				li.addEventListener('click',function(e){
+					e.preventDefault();
+					alert(i);
+				});                                  
+				document.body.appendChild(li);
+		    })(i);                                  //即时函数（定义后立即执行）
+	    }
+	    
+
+	    /*
+	    错误写法，点击弹出的都是10。 因为执行时addEventListener是DOM事件，异步执行
+	    将10个事件依次放到异步队列中，for执行完，再轮询异步队列执行addEventListener
+	    var i;
+        for(i=0;i<10;i++){
+				var li = document.createElement('li');
+				li.innerHTML = i+"<br/>";
+				li.addEventListener('click',function(e){
+					e.preventDefault();
+					alert(i);
+				});
+				document.body.appendChild(li);
+		 
+	    }*/
+
+
+			//实际开发中，闭包主要用于封装变量，收敛权限
+			function isFirstLoad(){
+				var _list=[];  //私有变量
+				return function(num){
+					if(_list.indexOf(num)>=0){
+						return false;
+					}else{
+						_list.push(num);
+						return true;
+					}
+				};
+			}
+			var firstload = isFirstLoad();
+			/*
+			firstload(10);//true
+			firstload(10);//false
+			firstload(20);//true
+			*/
+     </script>
+</body>
+</html>
