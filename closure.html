@@ -24,7 +24,7 @@
 	/*
 	    错误写法，点击弹出的都是10。 因为执行时addEventListener是DOM事件，异步执行
 	    将10个事件依次放到异步队列中，for执行完，再轮询异步队列执行addEventListener
-	    var i;
+	var i;//全局声明变量i  全局只有一个变量i
         for(i=0;i<10;i++){
 		var li = document.createElement('li');
 		li.innerHTML = i+"<br/>";
